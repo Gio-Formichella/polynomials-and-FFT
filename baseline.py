@@ -3,7 +3,7 @@ import numpy as np
 
 def baseline_sum(pol1: np.array, pol2: np.array) -> np.array:
     """
-    Complexity: O(n), n is the highest polynomial degree
+    Complexity: O(n)
     :param pol1: polynomial in coefficient form as numpy array
     :param pol2: polynomial in coefficient form as numpy array
     :return: sum polynomial in coefficient form as numpy array
@@ -31,7 +31,7 @@ def baseline_sum(pol1: np.array, pol2: np.array) -> np.array:
 
 def baseline_mul(pol1: np.array, pol2: np.array) -> np.array:
     """
-    Complexity: O(n^2), n is the highest polynomial degree
+    Also called convolution. Complexity: O(n^2)
     :param pol1: polynomial in coefficient form as numpy array
     :param pol2: polynomial in coefficient form as numpy array
     :return: sum polynomial in coefficient form as numpy array
