@@ -50,7 +50,7 @@ def coef_mul(pol1: np.array, pol2: np.array) -> np.array:
 
 def point_sum(pol1: list, pol2: list) -> list:
     """
-    Note: The two polynomial in point representation must use the same points, an exception is run otherwise
+    Note: The two polynomial in point representation must use the same points, an exception is raised otherwise
 
     Complexity: O(n)
     :param pol1: polynomial in point form
@@ -68,3 +68,24 @@ def point_sum(pol1: list, pol2: list) -> list:
         sum_poly.append((pol1[i][0], pol1[i][1] + pol2[i][1]))
 
     return sum_poly
+
+
+def point_mul(pol1: list, pol2: list) -> list:
+    """
+    Note: The two polynomial in point representation must use the same points, an exception is raised otherwise.
+    The number of points must be double the highest degree
+    :param pol1: polynomial in extensive point form (double the points)
+    :param pol2: polynomial in extensive point form (double the points)
+    :return: mul polynomial in point form
+    """
+
+    if len(pol1) != len(pol2):
+        raise ValueError("Different number of points given")
+
+    mul_poly = []  # Stores result
+    for i in range(len(pol1)):
+        if pol1[i][0] != pol2[i][0]:
+            raise ValueError("Different points given")
+        mul_poly.append((pol1[i][0], pol1[i][1] * pol2[i][1]))
+
+    return mul_poly

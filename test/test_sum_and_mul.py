@@ -55,6 +55,17 @@ class MyTestCase(unittest.TestCase):
         r = [(0, 1), (1, 1 + 1j), (2, 6)]
         self.assertEqual(point_sum(pol1, pol2), r)
 
+    def test_point_mul(self):
+        # invalid input
+        self.assertRaises(ValueError, point_mul, [(0, 0)], [])
+        self.assertRaises(ValueError, point_mul, [(0, 0)], [1, 1])
+
+        # mul
+        pol1 = [(0, 1), (1, 2), (2, 3), (3, 4)]
+        pol2 = [(0, 2), (1, 1j), (2, 1 + 2j), (3, 0)]
+        r = [(0, 2), (1, 2j), (2, 3 + 6j), (3, 0)]
+        self.assertEqual(point_mul(pol1, pol2), r)
+
 
 if __name__ == '__main__':
     unittest.main()
