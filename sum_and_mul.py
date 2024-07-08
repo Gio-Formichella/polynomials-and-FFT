@@ -46,3 +46,25 @@ def coef_mul(pol1: np.array, pol2: np.array) -> np.array:
                 mul_poly[-j] += pol1[-k]*pol2[- j + k - 1]
 
     return mul_poly
+
+
+def point_sum(pol1: list, pol2: list) -> list:
+    """
+    Note: The two polynomial in point representation must use the same points, an exception is run otherwise
+
+    Complexity: O(n)
+    :param pol1: polynomial in point form
+    :param pol2: polynomial in point form
+    :return: sum polynomial in point form
+    """
+
+    if len(pol1) != len(pol2):
+        raise ValueError("Different number of points given")
+
+    sum_poly = []  # Stores result
+    for i in range(len(pol1)):
+        if pol1[i][0] != pol2[i][0]:
+            raise ValueError("Different points given")
+        sum_poly.append((pol1[i][0], pol1[i][1] + pol2[i][1]))
+
+    return sum_poly

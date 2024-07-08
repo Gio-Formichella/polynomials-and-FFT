@@ -44,6 +44,17 @@ class MyTestCase(unittest.TestCase):
         r3 = np.array([1 + 1j, 4 + 4j, 8 + 8j])
         npt.assert_allclose(r3, coef_mul(pol4, pol5))
 
+    def test_point_sum(self):
+        # invalid input
+        self.assertRaises(ValueError, point_sum, [(0, 0)], [])
+        self.assertRaises(ValueError, point_sum, [(0, 0)], [1, 1])
+
+        # sum
+        pol1 = [(0, 0), (1, 1), (2, 2)]
+        pol2 = [(0, 1), (1, 1j), (2, 4)]
+        r = [(0, 1), (1, 1 + 1j), (2, 6)]
+        self.assertEqual(point_sum(pol1, pol2), r)
+
 
 if __name__ == '__main__':
     unittest.main()
