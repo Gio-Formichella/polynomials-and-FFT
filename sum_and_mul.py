@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def baseline_sum(pol1: np.array, pol2: np.array) -> np.array:
+def coef_sum(pol1: np.array, pol2: np.array) -> np.array:
     """
     Complexity: O(n)
     :param pol1: polynomial in coefficient form as numpy array
@@ -29,7 +29,7 @@ def baseline_sum(pol1: np.array, pol2: np.array) -> np.array:
     return np.array(poly_sum)
 
 
-def baseline_mul(pol1: np.array, pol2: np.array) -> np.array:
+def coef_mul(pol1: np.array, pol2: np.array) -> np.array:
     """
     Also called convolution. Complexity: O(n^2)
     :param pol1: polynomial in coefficient form as numpy array
