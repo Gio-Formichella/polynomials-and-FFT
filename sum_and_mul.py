@@ -73,7 +73,9 @@ def point_sum(pol1: list, pol2: list) -> list:
 def point_mul(pol1: list, pol2: list) -> list:
     """
     Note: The two polynomial in point representation must use the same points, an exception is raised otherwise.
-    The number of points must be double the highest degree
+    The number of points must be double the highest degree.
+
+    Complexity: O(n)
     :param pol1: polynomial in extensive point form (double the points)
     :param pol2: polynomial in extensive point form (double the points)
     :return: mul polynomial in point form
