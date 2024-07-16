@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 
@@ -39,3 +41,37 @@ def recursive_fft(a: np.array, inverse=False, root=True) -> np.array:
     if inverse and root:
         y /= n
     return y
+
+
+def fft_poly_mul(pol1: np.array, pol2: np.array) -> np.array:
+    """
+    Complexity: O(n lg(n))
+    :param pol1: coefficient form polynomial
+    :param pol2: coefficient form polynomial
+    :return: multiplication polynomial in coefficient form
+    """
+    l1 = len(pol1)
+    l2 = len(pol2)
+
+    # Null polynomial
+    if l1 == 0:
+        return np.zeros(l2, dtype=pol1.dtype)
+    if l2 == 0:
+        return np.zeros(l1, dtype=pol2.dtype)
+
+    max_length = l1 + l2 - 1
+    m = 2 ** (math.ceil(math.log2(max_length)))
+
+    pol1 = np.pad(pol1, (0, m - l1))
+    pol2 = np.pad(pol2, (0, m - l2))
+
+    y1 = recursive_fft(pol1)
+    y2 = recursive_fft(pol2)
+
+    y = y1 * y2
+
+    # Inverse DFT
+    a = recursive_fft(y, inverse=True)
+
+    # Trimming the result to remove padding
+    return a[:max_length]
