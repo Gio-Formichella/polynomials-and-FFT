@@ -75,3 +75,61 @@ def fft_poly_mul(pol1: np.array, pol2: np.array) -> np.array:
 
     # Trimming the result to remove padding
     return a[:max_length]
+
+
+def iterative_fft(a: np.array) -> np.array:
+    """
+    Iterative Fast Fourier Transformation of polynomial.
+
+    Complexity: O(n lg(n))
+    :param a: polynomial in coefficient form
+    :return: DFT(a) in point form
+    """
+    n = len(a)
+    a = bit_reverse_copy(a)
+
+    for s in range(1, int(np.log2(n)) + 1):
+        m = 2 ** s
+        omega_m = np.exp(2 * np.pi * 1j / m)
+        for k in range(0, n, m):
+            omega = 1
+            for j in range(m // 2):
+                t = omega * a[k + j + m // 2]
+                u = a[k + j]
+                a[k + j] = u + t
+                a[k + j + m // 2] = u - t
+                omega = omega * omega_m
+
+    return a
+
+
+def bit_reverse_copy(a: np.array) -> np.array:
+    """
+
+    :param a: polynomial
+    :return: reordered array based on index bits reverse
+    """
+    n = len(a)
+    bit_size = int(np.log2(n))
+    reversed_a = np.zeros(n, dtype=a.dtype)
+
+    for i in range(n):
+        reversed_index = reverse_bits(i, bit_size)
+        reversed_a[reversed_index] = a[i]
+
+    return reversed_a
+
+
+def reverse_bits(n, bit_size):
+    """
+
+    :param n: integer
+    :param bit_size:  bits used for integer representation
+    :return: reversed bit integer
+    """
+    reverse_n = 0
+    for i in range(bit_size):
+        reverse_n = (reverse_n << 1) | (n & 1)
+        n >>= 1
+
+    return reverse_n

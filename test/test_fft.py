@@ -42,6 +42,12 @@ class MyTestCase(unittest.TestCase):
         r3 = np.array([1 + 1j, 4 + 4j, 8 + 8j])
         npt.assert_allclose(r3, fft_poly_mul(pol4, pol5))
 
+    def test_iterative_fft(self):
+        # direct fft
+        pol1 = np.array([1, 1, 1, 1])  # n = 4 = 2^2
+        r = np.array([4, 0, 0, 0])
+        npt.assert_almost_equal(iterative_fft(pol1), r)
+
 
 if __name__ == '__main__':
     unittest.main()
