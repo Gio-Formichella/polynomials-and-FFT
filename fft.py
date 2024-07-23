@@ -44,11 +44,12 @@ def recursive_fft(a: np.array, inverse=False, root=True) -> np.array:
     return y
 
 
-def fft_poly_mul(pol1: np.array, pol2: np.array) -> np.array:
+def fft_poly_mul(pol1: np.array, pol2: np.array, fft_type="iterative") -> np.array:
     """
     Complexity: O(n lg(n))
     :param pol1: coefficient form polynomial
     :param pol2: coefficient form polynomial
+    :param fft_type: iterative or recursive. Note: result is unchanged
     :return: multiplication polynomial in coefficient form
     """
     l1 = len(pol1)
@@ -60,19 +61,24 @@ def fft_poly_mul(pol1: np.array, pol2: np.array) -> np.array:
     if l2 == 0:
         return np.zeros(l1, dtype=pol2.dtype)
 
+    if fft_type == "iterative":
+        fft = iterative_fft
+    else:
+        fft = recursive_fft
+
     max_length = l1 + l2 - 1
     m = 2 ** (math.ceil(math.log2(max_length)))
 
     pol1 = np.pad(pol1, (0, m - l1))
     pol2 = np.pad(pol2, (0, m - l2))
 
-    y1 = recursive_fft(pol1)
-    y2 = recursive_fft(pol2)
+    y1 = fft(pol1)
+    y2 = fft(pol2)
 
     y = y1 * y2
 
     # Inverse DFT
-    a = recursive_fft(y, inverse=True)
+    a = fft(y, inverse=True)
 
     # Trimming the result to remove padding
     return a[:max_length]
@@ -121,7 +127,7 @@ def bit_reverse_copy(a: np.array) -> np.array:
     """
     n = len(a)
     bit_size = int(np.log2(n))
-    reversed_a = np.zeros(n, dtype=a.dtype)
+    reversed_a = np.zeros(n, dtype=complex)
 
     for i in range(n):
         reversed_index = reverse_bits(i, bit_size)
