@@ -48,6 +48,15 @@ class MyTestCase(unittest.TestCase):
         r = np.array([4, 0, 0, 0])
         npt.assert_almost_equal(iterative_fft(pol1), r)
 
+        # inverse fft
+        points = np.array([4, 0, 0, 0])
+        r = np.array([1, 1, 1, 1])
+        npt.assert_almost_equal(iterative_fft(points, True), r)
+
+        pol2 = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+        points = recursive_fft(pol2)
+        npt.assert_almost_equal(pol2, iterative_fft(points, True))
+
 
 if __name__ == '__main__':
     unittest.main()

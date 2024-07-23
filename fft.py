@@ -78,12 +78,13 @@ def fft_poly_mul(pol1: np.array, pol2: np.array) -> np.array:
     return a[:max_length]
 
 
-def iterative_fft(a: np.array) -> np.array:
+def iterative_fft(a: np.array, inverse=False) -> np.array:
     """
     Iterative Fast Fourier Transformation of polynomial. Runs butterflies in parallel
 
     Complexity: O(n lg(n))
     :param a: polynomial in coefficient form
+    :param inverse: direct or inverse DFT flag
     :return: DFT(a) in point form
     """
     n = len(a)
@@ -92,6 +93,8 @@ def iterative_fft(a: np.array) -> np.array:
     for s in range(1, int(np.log2(n)) + 1):
         m = 2 ** s
         omega_m = np.exp(2 * np.pi * 1j / m)
+        if inverse:
+            omega_m **= -1
 
         def butterfly(k):
             omega = 1
@@ -105,6 +108,8 @@ def iterative_fft(a: np.array) -> np.array:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             executor.map(butterfly, range(0, n, m))
 
+    if inverse:
+        a = a / n
     return a
 
 
