@@ -62,6 +62,7 @@ plt.ylabel("Time (s)")
 plt.legend()
 
 plt.figure()
+plt.title('Complexity Comparison of Polynomial Multiplication Methods')
 plt.plot(range(1, max_degree, step), y2, "g", label="Recursive FFT Multiplication")
 plt.plot(range(1, max_degree, step), y3, "b", label="Iterative FFT Multiplication")
 

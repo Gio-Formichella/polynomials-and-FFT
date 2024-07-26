@@ -7,4 +7,11 @@ Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein.
 - **baseline.py**: baseline polynomial operations
 - **fft.py**: faster polynomial multiplication using FFT
 - **test**: unit tests
-- **complexity_test.py**: complexity curve plotting script
+- **mul_complexity.py**: complexity curve plotting script
+
+## Performance
+
+<p float="left">
+    <img src="img/baselineVsFFT.png" width="49%">
+    <img src="img/recVSiter.png" width="49%">
+</p>
