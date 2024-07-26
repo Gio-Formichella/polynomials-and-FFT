@@ -1,4 +1,3 @@
-import concurrent.futures
 import math
 
 import numpy as np
@@ -86,7 +85,7 @@ def fft_poly_mul(pol1: np.array, pol2: np.array, fft_type="iterative") -> np.arr
 
 def iterative_fft(a: np.array, inverse=False) -> np.array:
     """
-    Iterative Fast Fourier Transformation of polynomial. Runs butterflies in parallel
+    Iterative Fast Fourier Transformation of polynomial.
 
     Complexity: O(n lg(n))
     :param a: polynomial in coefficient form
@@ -111,8 +110,8 @@ def iterative_fft(a: np.array, inverse=False) -> np.array:
                 a[k + j + m // 2] = u - t
                 omega = omega * omega_m
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            executor.map(butterfly, range(0, n, m))
+        for k in range(0, n, m):
+            butterfly(k)
 
     if inverse:
         a = a / n
